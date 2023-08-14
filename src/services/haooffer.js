@@ -1,7 +1,7 @@
 const client = require("@services/client");
 const cheerio = require("cheerio");
 const _ = require("lodash");
-const Haooffer = require("@models/haooffer");
+const Offer = require("@models/offer");
 
 const scrapeOnePage = async (pageNum) => {
     const res = await client.get(
@@ -33,7 +33,7 @@ const scrapeOnePage = async (pageNum) => {
 
         if (start && !stop) {
             tableData.push(
-                new Haooffer(colData[1], colData[2], colData[3], colData[0]),
+                new Offer(colData[1], colData[2], colData[3], colData[0]),
             );
         }
 

@@ -1,6 +1,6 @@
 const { hashString } = require("@utils/index");
 
-class Haooffer {
+class Offer {
     constructor(name, company, date, link) {
         this.name = name;
         this.company = company;
@@ -10,4 +10,4 @@ class Haooffer {
     }
 }
 
-module.exports = Haooffer;
+module.exports = Offer;

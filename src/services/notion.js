@@ -1,5 +1,5 @@
 const { Client } = require("@notionhq/client");
-const Haooffer = require("@models/haooffer");
+const Offer = require("@models/offer");
 const { toDateString } = require("@utils/index");
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
@@ -17,27 +17,27 @@ const query = async () => {
         const date = page.properties.Date.date?.start;
         const link = page.properties.Link.url;
 
-        const haooffer = new Haooffer(name, company, date, link);
+        const haooffer = new Offer(name, company, date, link);
         haooffers.push(haooffer);
     }
 
     return haooffers;
 };
 
-const insertOne = async (data) => {
+const insertOne = async (offer) => {
     return await notion.pages.create({
         parent: { database_id: process.env.DATABASE_ID },
         properties: {
-            "Name": { title: [{ text: { content: data.name } }] },
+            "Name": { title: [{ text: { content: offer.name } }] },
             "Company": {
                 multi_select: [
                     {
-                        name: data.company.replace(",", "").replace(".", ""),
+                        name: offer.company.replace(",", "").replace(".", ""),
                     },
                 ],
             },
-            "Link": { url: data.link },
-            "Date": { date: { start: toDateString(data.date) } },
+            "Link": { url: offer.link },
+            "Date": { date: { start: toDateString(offer.date) } },
             "Submitted?": { checkbox: false },
         },
     });
