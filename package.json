@@ -1,0 +1,25 @@
+{
+    "name": "haooffer-to-notion",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+        "start": "node src/index.js"
+    },
+    "dependencies": {
+        "@notionhq/client": "^2.2.11",
+        "axios": "^1.4.0",
+        "cheerio": "^1.0.0-rc.12",
+        "dotenv": "^16.3.1",
+        "lodash": "^4.17.21",
+        "module-alias": "^2.2.3"
+    },
+    "devDependencies": {
+        "eslint": "^8.47.0",
+        "prettier": "^3.0.1"
+    },
+    "_moduleAliases": {
+        "@services": "src/services",
+        "@models": "src/models",
+        "@utils": "src/utils"
+    }
+}
