@@ -76,6 +76,19 @@ const scrape = async () => {
                 job[header[j]] = columns[j];
             }
 
+            const sponsor = job["Citizenship/Visa Requirements"];
+            if (
+                sponsor &&
+                (sponsor === "Work Auth Required" ||
+                    sponsor.indexOf("U.S. Citizen") !== -1 ||
+                    sponsor.indexOf("Permanent Resident") !== -1)
+            ) {
+                logger.debug(
+                    `Skipping ${job["Roles"]} at ${job["Name"]} due to work auth.`,
+                );
+                continue;
+            }
+
             const nameAndLink = extractJobDetails(job["Roles"]);
             const company = extractNameOrAbbreviation(job["Name"]);
             for (let nl of nameAndLink) {
