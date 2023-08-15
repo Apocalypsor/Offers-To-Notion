@@ -14,7 +14,7 @@ const notify = async (errorMessage) => {
 
         logger.info("Message sent", response.data);
     } catch (error) {
-        logger.log("Error sending message", error);
+        logger.error("Error sending message", error);
     }
 };
 
