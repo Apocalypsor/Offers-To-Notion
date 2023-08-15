@@ -1,6 +1,8 @@
 name: Scheduled yarn start
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - main
