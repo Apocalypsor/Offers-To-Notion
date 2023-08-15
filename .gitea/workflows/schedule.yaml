@@ -1,6 +1,10 @@
 name: Scheduled yarn start
 
 on:
+  push:
+    branches:
+      - main
+
   schedule:
     - cron: "*/30 * * * *"
 
