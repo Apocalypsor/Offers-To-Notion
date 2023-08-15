@@ -41,7 +41,7 @@ const insertOne = async (offer) => {
             "Company": {
                 multi_select: [
                     {
-                        name: offer.company.replace(",", "").replace(".", ""),
+                        name: offer.company,
                     },
                 ],
             },
