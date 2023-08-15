@@ -5,6 +5,7 @@ const { query, insertOne } = require("@services/notion");
 const logger = require("@utils/logger");
 const newgrad = require("@services/newgrad");
 const _ = require("lodash");
+const notify = require("@utils/notify");
 
 const main = async () => {
     const existingOffers = await query();
@@ -25,11 +26,13 @@ const main = async () => {
         }
     });
 
-    logger.info(`Adding ${filteredOffers.length} new haooffers...`);
+    logger.info(`Adding ${filteredOffers.length} new offers...`);
 
     for (let data of filteredOffers) {
         await insertOne(data);
     }
 };
 
-main().then(() => console.log("Done!"));
+main()
+    .then(() => console.log("Done!"))
+    .catch(async (err) => await notify(err.message));

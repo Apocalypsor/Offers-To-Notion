@@ -1,5 +1,7 @@
 const winston = require("winston");
 
+const rootDir = __dirname + "/../../";
+
 const logger = winston.createLogger({
     level: process.env.LOG_LEVEL || "info",
     format: winston.format.combine(
@@ -8,11 +10,13 @@ const logger = winston.createLogger({
     ),
     transports: [
         new winston.transports.File({
-            filename: "./logs/error.log",
+            filename: rootDir + "./logs/error.log",
             level: "error",
         }),
 
-        new winston.transports.File({ filename: "./logs/combined.log" }),
+        new winston.transports.File({
+            filename: rootDir + "./logs/combined.log",
+        }),
 
         new winston.transports.Console({
             format: winston.format.combine(
