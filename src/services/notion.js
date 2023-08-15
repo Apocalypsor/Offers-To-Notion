@@ -5,20 +5,29 @@ const { toDateString } = require("@utils/index");
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 
 const query = async () => {
-    const response = await notion.databases.query({
-        database_id: process.env.DATABASE_ID,
-    });
-
+    let hasMore = true;
+    let startCursor = undefined;
     const haooffers = [];
 
-    for (let page of response.results) {
-        const name = page.properties.Name.title[0]?.text.content;
-        const company = page.properties.Company.multi_select[0]?.name;
-        const date = page.properties.Date.date?.start;
-        const link = page.properties.Link.url;
+    while (hasMore) {
+        const response = await notion.databases.query({
+            database_id: process.env.DATABASE_ID,
+            start_cursor: startCursor,
+            page_size: 100,
+        });
 
-        const haooffer = new Offer(name, company, date, link);
-        haooffers.push(haooffer);
+        for (let page of response.results) {
+            const name = page.properties.Name.title[0]?.text.content;
+            const company = page.properties.Company.multi_select[0]?.name;
+            const date = page.properties.Date.date?.start;
+            const link = page.properties.Link.url;
+
+            const haooffer = new Offer(name, company, date, link);
+            haooffers.push(haooffer);
+        }
+
+        hasMore = response.has_more;
+        startCursor = response.next_cursor;
     }
 
     return haooffers;
