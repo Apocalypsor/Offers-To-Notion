@@ -48,7 +48,7 @@ const insertOne = async (offer) => {
             "Link": { url: offer.link },
             "Date": { date: { start: toDateString(offer.date) } },
             "Submitted?": { checkbox: false },
-            "No Sponsorship?": { checkbox: false },
+            "Won't Apply": { checkbox: false },
             "Ignored?": { checkbox: false },
         },
     });
