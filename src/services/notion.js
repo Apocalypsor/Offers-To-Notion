@@ -48,6 +48,7 @@ const insertOne = async (offer) => {
             "Link": { url: offer.link },
             "Date": { date: { start: toDateString(offer.date) } },
             "Submitted?": { checkbox: false },
+            "Ignored?": { checkbox: false },
         },
     });
 };
