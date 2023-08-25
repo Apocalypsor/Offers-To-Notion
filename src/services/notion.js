@@ -22,8 +22,10 @@ const query = async () => {
             const date = page.properties.Date.date?.start;
             const link = page.properties.Link.url;
 
-            const haooffer = new Offer(name, company, date, link);
-            haooffers.push(haooffer);
+            if (name && company && date && link) {
+                const haooffer = new Offer(name, company, date, link);
+                haooffers.push(haooffer);
+            }
         }
 
         hasMore = response.has_more;

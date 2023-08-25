@@ -35,4 +35,7 @@ const main = async () => {
 
 main()
     .then(() => console.log("Done!"))
-    .catch(async (err) => await notify(err.message));
+    .catch(async (err) => {
+        logger.error(err.stack);
+        await notify(err.message);
+    });

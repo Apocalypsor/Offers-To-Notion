@@ -2,6 +2,11 @@ const client = require("@services/client");
 const logger = require("@utils/logger");
 
 const notify = async (errorMessage) => {
+    if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
+        logger.error("TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set");
+        return;
+    }
+
     try {
         const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
         const chatId = process.env.TELEGRAM_CHAT_ID;

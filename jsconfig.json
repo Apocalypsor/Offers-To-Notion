@@ -1,12 +1,20 @@
 {
-    "compilerOptions": {
-        "checkJs": true,
-        "allowSyntheticDefaultImports": true,
-        "paths": {
-            "@services/*": ["./src/services/*"],
-            "@models/*": ["./src/models/*"],
-            "@utils/*": ["./src/utils/*"]
-        }
-    },
-    "exclude": ["node_modules"]
+  "compilerOptions": {
+    "checkJs": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
