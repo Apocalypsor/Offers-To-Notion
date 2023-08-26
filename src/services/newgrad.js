@@ -93,7 +93,7 @@ const scrape = async () => {
             const company = extractNameOrAbbreviation(job["Name"]);
             for (let nl of nameAndLink) {
                 jobListings.push(
-                    new Offer(nl.name, company, job["Date Posted"], nl.link),
+                    new Offer(nl.name, company, job["Date Added"], nl.link),
                 );
             }
         }
