@@ -11,8 +11,12 @@ const main = async () => {
     const existingOffers = await query();
     const linkSet = new Set(existingOffers.map((haooffer) => haooffer.link));
 
+    logger.info("Start to scrape haoofer...");
     const newHaooffers = await haooffer.scrape();
+
+    logger.info("Start to scrape newgrad...");
     const newNewGradOffers = await newgrad.scrape();
+    
     const newOffers = _.concat(newHaooffers, newNewGradOffers);
 
     // * Filter out existing haooffers by id and link

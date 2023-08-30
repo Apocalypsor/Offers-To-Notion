@@ -2,6 +2,8 @@ const client = require("@services/client");
 const cheerio = require("cheerio");
 const _ = require("lodash");
 const Offer = require("@models/offer");
+const { getFinalLink } = require("@utils/index");
+const logger = require("@utils/logger");
 
 const scrapeOnePage = async (pageNum) => {
     const res = await client.get(
@@ -9,16 +11,22 @@ const scrapeOnePage = async (pageNum) => {
     );
 
     const $ = cheerio.load(res.data);
-    const rows = $("tr");
+    const tableDiv = $(".tablebox");
+    const rows = $(tableDiv).find("div.row");
 
     let tableData = [];
-    let start = false;
     let stop = false;
 
-    rows.each((i, row) => {
-        const cols = $(row).find("td, th");
+    logger.debug(
+        `Found ${rows.length} rows in page ${pageNum} of haooffer.net/new-grad`,
+    );
 
-        let colData = [];
+    rows.map(async (i, row) => {
+        const cols = $(row).find("div.td");
+        if (cols.length === 0) return;
+
+        const colData = [];
+
         cols.each((j, ele) => {
             const element = $(ele);
             if (element.find("a").length) {
@@ -31,14 +39,10 @@ const scrapeOnePage = async (pageNum) => {
 
         if (colData[0].startsWith("没数据")) stop = true;
 
-        if (start && !stop) {
+        if (!stop) {
             tableData.push(
                 new Offer(colData[1], colData[2], colData[3], colData[0]),
             );
-        }
-
-        if (colData[0].startsWith("职位名称")) {
-            start = true;
         }
     });
 
@@ -54,6 +58,9 @@ const scrape = async () => {
 
         tableData = _.union(tableData, scrapedTableData);
     }
+
+    logger.info("Found " + tableData.length + " offers from haooffer");
+    logger.debug(tableData);
 
     return tableData;
 };

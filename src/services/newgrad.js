@@ -1,6 +1,7 @@
 const client = require("@services/client");
 const Offer = require("@models/offer");
 const logger = require("@utils/logger");
+const { getFinalLink } = require("@utils/index");
 
 const extractNameOrAbbreviation = (input) => {
     const linkRemoved = input.replace(/\[([^\]]+)]\([^)]+\)/, "$1");
@@ -16,6 +17,23 @@ const extractNameOrAbbreviation = (input) => {
     } else {
         return linkRemoved;
     }
+};
+
+const checkNoSponsor = (str) => {
+    const stopWords = [
+        "Work Auth Required",
+        "Sponsorship not available",
+        "U.S. Citizen",
+        "Permanent Resident",
+        "does NOT offer visa sponsorship",
+        "No sponsorship",
+        "sponsorship not eligible",
+        "not eligible for sponsorship",
+        "Sponsorship not provided",
+        "sponsorship not available",
+    ];
+
+    return stopWords.some((word) => str.indexOf(word) !== -1);
 };
 
 const extractJobDetails = (str) => {
@@ -77,12 +95,7 @@ const scrape = async () => {
             }
 
             const sponsor = job["Citizenship/Visa Requirements"];
-            if (
-                sponsor &&
-                (sponsor === "Work Auth Required" ||
-                    sponsor.indexOf("U.S. Citizen") !== -1 ||
-                    sponsor.indexOf("Permanent Resident") !== -1)
-            ) {
+            if (sponsor && checkNoSponsor(sponsor)) {
                 logger.debug(
                     `Skipping ${job["Roles"]} at ${job["Name"]} due to work auth.`,
                 );
@@ -91,13 +104,16 @@ const scrape = async () => {
 
             const nameAndLink = extractJobDetails(job["Roles"]);
             const company = extractNameOrAbbreviation(job["Name"]);
-            for (let nl of nameAndLink) {
+            for (const nl of nameAndLink) {
                 jobListings.push(
                     new Offer(nl.name, company, job["Date Added"], nl.link),
                 );
             }
         }
     }
+
+    logger.info(`Found ${jobListings.length} jobs in newgrad`);
+    logger.debug(jobListings);
 
     return jobListings;
 };

@@ -21,6 +21,12 @@ class Offer {
             this.name + this.company + toDateString(this.date),
         );
     }
+
+    toString() {
+        return `${this.name} ${this.link} @ ${this.company} (${this.date.format(
+            "YYYY-MM-DD",
+        )})`;
+    }
 }
 
 module.exports = Offer;
