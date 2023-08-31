@@ -2,7 +2,6 @@ const client = require("@services/client");
 const cheerio = require("cheerio");
 const _ = require("lodash");
 const Offer = require("@models/offer");
-const { getFinalLink } = require("@utils/index");
 const logger = require("@utils/logger");
 
 const scrapeOnePage = async (pageNum) => {
@@ -27,9 +26,15 @@ const scrapeOnePage = async (pageNum) => {
 
         const colData = [];
 
+        let valid = true;
         cols.each((j, ele) => {
             const element = $(ele);
             if (element.find("a").length) {
+                const sponsor = element.text().trim();
+                if (sponsor.includes("US Citizen") || sponsor.includes("无 Sponsor") || sponsor.includes("职位失效")) {
+                    logger.info("Skipping " + sponsor + " because it is " + sponsor);
+                    valid = false;
+                }
                 colData.push(element.find("a").attr("href"));
                 colData.push(element.find("a").text().trim());
             } else {
@@ -39,7 +44,7 @@ const scrapeOnePage = async (pageNum) => {
 
         if (colData[0].startsWith("没数据")) stop = true;
 
-        if (!stop) {
+        if (!stop && valid) {
             tableData.push(
                 new Offer(colData[1], colData[2], colData[3], colData[0]),
             );

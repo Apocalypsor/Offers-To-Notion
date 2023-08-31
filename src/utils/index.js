@@ -1,6 +1,4 @@
 const crypto = require("crypto");
-const client = require("@services/client");
-const logger = require("@utils/logger");
 
 const hashString = (data) => {
     const hash = crypto.createHash("sha256");

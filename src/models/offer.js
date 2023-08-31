@@ -23,9 +23,9 @@ class Offer {
     }
 
     toString() {
-        return `${this.name} ${this.link} @ ${this.company} (${this.date.format(
+        return `\n[${this.name} ${this.link} @ ${this.company} (${this.date.format(
             "YYYY-MM-DD",
-        )})`;
+        )})]`;
     }
 }
 

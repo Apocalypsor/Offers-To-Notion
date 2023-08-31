@@ -16,10 +16,9 @@ const main = async () => {
 
     logger.info("Start to scrape newgrad...");
     const newNewGradOffers = await newgrad.scrape();
-    
+
     const newOffers = _.concat(newHaooffers, newNewGradOffers);
 
-    // * Filter out existing haooffers by id and link
     const filteredOffers = newOffers.filter((haooffer) => {
         if (linkSet.has(haooffer.link)) {
             logger.debug(`Skipping ${haooffer.name}...`);

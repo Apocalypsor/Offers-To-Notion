@@ -1,7 +1,6 @@
 const client = require("@services/client");
 const Offer = require("@models/offer");
 const logger = require("@utils/logger");
-const { getFinalLink } = require("@utils/index");
 
 const extractNameOrAbbreviation = (input) => {
     const linkRemoved = input.replace(/\[([^\]]+)]\([^)]+\)/, "$1");

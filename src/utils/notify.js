@@ -3,7 +3,7 @@ const logger = require("@utils/logger");
 
 const notify = async (errorMessage) => {
     if (!process.env.TELEGRAM_BOT_TOKEN || !process.env.TELEGRAM_CHAT_ID) {
-        logger.error("TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set");
+        logger.warning("TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set");
         return;
     }
 
