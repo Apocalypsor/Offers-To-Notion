@@ -32,7 +32,7 @@ const scrapeOnePage = async (pageNum) => {
             if (element.find("a").length) {
                 const sponsor = element.text().trim();
                 if (sponsor.includes("US Citizen") || sponsor.includes("无 Sponsor") || sponsor.includes("职位失效")) {
-                    logger.info("Skipping " + sponsor + " because it is " + sponsor);
+                    logger.debug("Skipping " + sponsor + " because it is " + sponsor);
                     valid = false;
                 }
                 colData.push(element.find("a").attr("href"));
