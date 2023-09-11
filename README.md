@@ -18,7 +18,7 @@ Add a new Database in Notion with the following headers:
 ![Database Header](./docs/header.png)
 ```text
 Name        -   Title
-Company     -   Multi-select
+Company     -   Select
 Date        -   Date
 Link        -   URL
 Submitted?  -   Checkbox

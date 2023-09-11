@@ -18,7 +18,7 @@ const query = async () => {
 
         for (let page of response.results) {
             const name = page.properties.Name.title[0]?.text.content;
-            const company = page.properties.Company.multi_select[0]?.name;
+            const company = page.properties.Company.select?.name;
             const date = page.properties.Date.date?.start;
             const link = page.properties.Link.url;
 
@@ -42,11 +42,9 @@ const insertOne = async (offer) => {
         properties: {
             "Name": { title: [{ text: { content: offer.name } }] },
             "Company": {
-                multi_select: [
-                    {
-                        name: offer.company,
-                    },
-                ],
+                select: {
+                    name: offer.company,
+                },
             },
             "Link": { url: offer.link },
             "Date": { date: { start: toDateString(offer.date) } },
