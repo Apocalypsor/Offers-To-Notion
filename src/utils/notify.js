@@ -12,12 +12,12 @@ const notify = async (errorMessage) => {
         const chatId = process.env.TELEGRAM_CHAT_ID;
         const text = `Error: ${errorMessage}`;
 
-        const response = await client.post(url, {
+        await client.post(url, {
             chat_id: chatId,
             text: text,
         });
 
-        logger.info("Message sent", response.data);
+        logger.info("Message sent!");
     } catch (error) {
         logger.error("Error sending message", error);
     }

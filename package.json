@@ -6,7 +6,7 @@
     "start": "node src/index.js"
   },
   "dependencies": {
-    "@notionhq/client": "^2.2.11",
+    "@notionhq/client": "^2.2.13",
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.3.1",
