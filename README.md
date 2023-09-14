@@ -15,26 +15,31 @@ To use GitHub Action, you need to fork this repository and enable GitHub Action 
 ### 1. Add Database in Notion
 
 Add a new Database in Notion with the following headers:
-![Database Header](./docs/header.png)
+![Database Header](./docs/database_header.png)
+
 ```text
 Name        -   Title
 Company     -   Select
 Date        -   Date
 Link        -   URL
-Submitted?  -   Checkbox
-Won't Apply -   Checkbox
-Ignored?    -   Checkbox
+Status      -   Status
+            | - To-do: Draft
+            | - In progress: Set Aside
+            | - Complete: Submitted, Won't Apply
 ```
 
-You can find the Database ID in the URL of the Database according to [this documentation](https://developers.notion.com/reference/retrieve-a-database#:~:text=To%20find%20a%20database%20ID,a%2032%20characters%20alphanumeric%20string.).
+You can find the Database ID in the URL of the Database according
+to [this documentation](https://developers.notion.com/reference/retrieve-a-database#:~:text=To%20find%20a%20database%20ID,a%2032%20characters%20alphanumeric%20string.).
 
-Also, you need to add a new Integration in Notion and get the Internal Integration Secret according to [this documentation](https://www.notion.so/help/create-integrations-with-the-notion-api).
+Also, you need to add a new Integration in Notion and get the Internal Integration Secret according
+to [this documentation](https://www.notion.so/help/create-integrations-with-the-notion-api).
 
 ### 2. Run
 
 #### GitHub Action
 
 Add the following secrets in the forked repository:
+
 ```
 NOTION_TOKEN=<YOUR_INTEGRATION_INTEGRATION_SECRET>
 DATABASE_ID=<YOUR_NOTION_DATABASE_ID>
@@ -42,9 +47,10 @@ TELEGRAM_BOT_TOKEN=<OPTIONAL_TELEGRAM_BOT_TOKEN>
 TELEGRAM_CHAT_ID=<OPTIONAL_TELEGRAM_CHAT_ID>
 ```
 
-Telegram is used to send notifications when the script fails.
+Telegram is used to send notifications when the script fails and is optional.
 
-If you configure GitHub Action correctly, the script will run automatically, and you can see new jobs in your notion database.
+If you configure GitHub Action correctly, the script will run automatically, and you can see new jobs in your notion
+database.
 
 #### Local
 

@@ -40,17 +40,15 @@ const insertOne = async (offer) => {
     return await notion.pages.create({
         parent: { database_id: process.env.DATABASE_ID },
         properties: {
-            "Name": { title: [{ text: { content: offer.name } }] },
-            "Company": {
+            Name: { title: [{ text: { content: offer.name } }] },
+            Company: {
                 select: {
                     name: offer.company,
                 },
             },
-            "Link": { url: offer.link },
-            "Date": { date: { start: toDateString(offer.date) } },
-            "Submitted?": { checkbox: false },
-            "Won't Apply": { checkbox: false },
-            "Ignored?": { checkbox: false },
+            Link: { url: offer.link },
+            Date: { date: { start: toDateString(offer.date) } },
+            Status: { status: { name: "Draft" } },
         },
     });
 };

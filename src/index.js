@@ -40,5 +40,5 @@ main()
     .then(() => console.log("Done!"))
     .catch(async (err) => {
         logger.error(err.stack);
-        await notify(err.message);
+        await notify(`Offers-To-Notion:\n${err.message}`);
     });
