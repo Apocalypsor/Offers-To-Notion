@@ -4,10 +4,12 @@ const haooffer = require("@services/haooffer");
 const { query, insertOne } = require("@services/notion");
 const logger = require("@utils/logger");
 const newgrad = require("@services/newgrad");
+const newgradpositions = require("@services/newgradpositions");
 const _ = require("lodash");
 const notify = require("@utils/notify");
 
 const main = async () => {
+    logger.info("Start to check existing offers...");
     const existingOffers = await query();
     const linkSet = new Set(existingOffers.map((haooffer) => haooffer.link));
 
@@ -17,7 +19,15 @@ const main = async () => {
     logger.info("Start to scrape newgrad...");
     const newNewGradOffers = await newgrad.scrape();
 
-    const newOffers = _.concat(newHaooffers, newNewGradOffers);
+    logger.info("Start to scrape newgradpositions...");
+    const newNewGradPositions = await newgradpositions.scrape();
+
+    logger.info("Start to merge new offers...");
+    const newOffers = _.concat(
+        newHaooffers,
+        newNewGradOffers,
+        newNewGradPositions,
+    );
 
     const filteredOffers = newOffers.filter((haooffer) => {
         if (linkSet.has(haooffer.link)) {

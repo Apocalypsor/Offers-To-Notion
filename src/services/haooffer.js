@@ -31,8 +31,14 @@ const scrapeOnePage = async (pageNum) => {
             const element = $(ele);
             if (element.find("a").length) {
                 const sponsor = element.text().trim();
-                if (sponsor.includes("US Citizen") || sponsor.includes("无 Sponsor") || sponsor.includes("职位失效")) {
-                    logger.debug("Skipping " + sponsor + " because it is " + sponsor);
+                if (
+                    sponsor.includes("US Citizen") ||
+                    sponsor.includes("无 Sponsor") ||
+                    sponsor.includes("职位失效")
+                ) {
+                    logger.debug(
+                        "Skipping " + sponsor + " because it is " + sponsor,
+                    );
                     valid = false;
                 }
                 colData.push(element.find("a").attr("href"));
@@ -46,7 +52,15 @@ const scrapeOnePage = async (pageNum) => {
 
         if (!stop && valid) {
             tableData.push(
-                new Offer(colData[1], colData[2], colData[3], colData[0]),
+                new Offer(
+                    colData[1],
+                    colData[2],
+                    colData[3],
+                    colData[0].replace(
+                        /[?&]utm_source=Haooffer&ref=Haooffer/,
+                        "",
+                    ),
+                ),
             );
         }
     });

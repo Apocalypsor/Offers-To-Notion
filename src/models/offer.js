@@ -9,7 +9,7 @@ class Offer {
         this.link = link;
         this.date = moment.tz(
             date,
-            ["YYYY-MM-DD", "MM/DD/YYYY"],
+            ["YYYY-MM-DD", "MM/DD/YYYY", "MMM DD"],
             "America/New_York",
         );
 
